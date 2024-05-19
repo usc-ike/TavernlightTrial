@@ -1,0 +1,12 @@
+MainWindow
+  id: Q7Mod
+  !text: tr('Q7')
+  size: 300 300
+  @onEnter: init()
+  @onEscape: terminate()
+
+  Button
+    id: jumpBtn
+    !text: tr('Jump!')
+    width: 50
+    @onClick: onBtnClick()

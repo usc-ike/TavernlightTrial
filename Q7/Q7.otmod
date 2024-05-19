@@ -1,0 +1,9 @@
+Module
+  name: client_Q7
+  description: 7th question for the Tavernlight Trials
+  author: Ryota Dan
+  website: https://github.com/usc-ike/TavernlightTrial
+  sandboxed: true
+  scripts: [ Q7.lua ]
+  @onLoad: init()
+  @onUnload: terminate()
