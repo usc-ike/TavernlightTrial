@@ -32,8 +32,10 @@ player remains unused and allocated if the program fails to load any player. In 
 void Game::addItemToPlayer(const std::string& recipient, uint16_t itemId)
 {
     Player* player = g_game.getPlayerByName(recipient);
+    bool createNewPlayer = false;
     if (!player) {
         player = new Player(nullptr);
+        createNewPlayer = true;
         if (!IOLoginData::loadPlayerByName(player, recipient)) {
             delete(player);
             return;
@@ -42,6 +44,9 @@ void Game::addItemToPlayer(const std::string& recipient, uint16_t itemId)
 
     Item* item = Item::CreateItem(itemId);
     if (!item) {
+        if(createNewPlayer){
+            delete(player);
+        }
         return;
     }
 
@@ -49,5 +54,9 @@ void Game::addItemToPlayer(const std::string& recipient, uint16_t itemId)
 
     if (player->isOffline()) {
         IOLoginData::savePlayer(player);
+    }
+    //Regardless of whether the player is still online or not, if we created a new instance of player using new Player(), we should free the memory as the player will not be referenced from that memory once we go out of scope.
+    if(createNewPlayer){
+        delete(player)
     }
 }
